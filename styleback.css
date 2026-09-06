@@ -6,8 +6,9 @@
 }
 
 body {
-    background: #0D0C0E;
-    background: linear-gradient(180deg,rgba(13, 12, 14, 1) 0%, rgba(13, 12, 14, 1) 50%, rgba(255, 147, 221, 1) 100%);
+    background: #000000;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(255, 147, 221, 1) 100%);
+    background-color: #070306;
     color: white;
     text-align: center;
     font-family: ADAXI;
@@ -51,6 +52,7 @@ h1 {
     width: auto;
 }
 
+#card,
 .card {
     display: flex;
     align-items: center;
@@ -63,13 +65,14 @@ h1 {
     padding: 30px;
     border-radius: 10px;
     border: 1px solid transparent;
-    background: linear-gradient(135deg, #151216, #271927) padding-box, linear-gradient(90deg, #e7c6c6, #E792C1) border-box;
+    background: linear-gradient(135deg, #180a15, #0f050e) padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
 }
 
 .card+.card {
     margin-top: 20px;
 }
 
+#card img,
 .card img {
     width: 110px;
     height: 110px;
@@ -79,11 +82,13 @@ h1 {
     background-color: #190916;
 }
 
+#card .card-content,
 .card .card-content {
     flex: 1;
     transform: translateY(-14px);
 }
 
+#card .username,
 .card .username {
     margin: 0 0 4px 0;
     font-size: 1.8rem;
@@ -95,6 +100,7 @@ h1 {
     display: inline-block;
 }
 
+#card p,
 .card p {
     margin: 0;
     color: #e0e0e0;
@@ -102,6 +108,7 @@ h1 {
 }
 
 .card-buttons {
+    
     display: flex;
     gap: 15px;
     width: 600px;
@@ -209,70 +216,6 @@ h1 {
     z-index: -1;
     object-fit: contain;
     object-position: bottom left;
-}
-
-/* ===== Merged profile panel (card + buttons as one piece) ===== */
-
-.profile-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 600px;
-    max-width: 90%;
-    margin: 0 auto 20px auto;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    background: linear-gradient(135deg, #151216, #271927) padding-box, linear-gradient(90deg, #e7c6c6, #E792C1) border-box;
-    overflow: visible;
-}
-
-.profile-panel .card {
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-    border: none;
-    background: none;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-}
-
-.profile-panel .card-buttons {
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-    gap: 0;
-    background: transparent;
-}
-
-.profile-panel .card-btn {
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0;
-    background: transparent padding-box, transparent border-box;
-    position: relative;
-    z-index: 1;
-    transition: transform 0.15s ease, filter 0.15s ease, border-radius 0.15s ease, background 0.15s ease;
-}
-
-.profile-panel .card-btn:first-child {
-    border-radius: 0 0 0 10px;
-}
-
-.profile-panel .card-btn:last-child {
-    border-radius: 0 0 10px 0;
-}
-
-.profile-panel .card-btn:first-child:last-child {
-    border-radius: 0 0 10px 10px;
-}
-
-.profile-panel .card-btn:hover {
-    transform: translateY(8px);
-    filter: brightness(1.15);
-    border-radius: 8px;
-    background: #180a15 padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
-    z-index: 2;
 }
 
 @media (max-width: 600px) {
