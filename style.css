@@ -13,8 +13,7 @@
 }
 
 body {
-    background: #0D0C0E;
-    background: linear-gradient(180deg, rgba(13, 12, 14, 1) 0%, rgba(13, 12, 14, 1) 50%, rgba(255, 147, 221, 1) 100%);
+    background-color: #0D0C0E;
     color: white;
     text-align: center;
     font-family: ADAXI;
@@ -27,6 +26,10 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
     box-sizing: border-box;
+}
+
+body.has-gradient {
+    background: #0D0C0E linear-gradient(180deg, rgba(13, 12, 14, 1) 0%, rgba(13, 12, 14, 1) 50%, rgba(255, 147, 221, 1) 100%);
 }
 
 html::-webkit-scrollbar {

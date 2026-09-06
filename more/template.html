@@ -3,80 +3,62 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>femboy.rocks - another personal site</title>
-    <meta name="title" content="femboy.rocks - another personal site" />
-    <meta name="description"
-        content="website that is always in constant development and work, but still cozy to be in." />
+    <!-- meta -->
+    <title>Subpage Title - femboy.rocks</title>
+    <meta name="title" content="Subpage Title - femboy.rocks" />
+    <meta name="description" content="Description of this subpage." />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://femboy.rocks" />
-    <meta property="og:title" content="femboy.rocks - another personal site" />
-    <meta property="og:description"
-        content="website that is always in constant development and work, but still cozy to be in." />
+    <meta property="og:url" content="https://femboy.rocks/more/subpage-name" />
+    <meta property="og:title" content="Subpage Title - femboy.rocks" />
+    <meta property="og:description" content="Description of this subpage." />
     <meta property="og:image" content="https://femboy.rocks/assets/images/banner.png" />
 
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://femboy.rocks" />
-    <meta property="twitter:title" content="femboy.rocks - another personal site" />
-    <meta property="twitter:description"
-        content="website that is always in constant development and work, but still cozy to be in." />
+    <meta property="twitter:url" content="https://femboy.rocks/more/subpage-name" />
+    <meta property="twitter:title" content="Subpage Title - femboy.rocks" />
+    <meta property="twitter:description" content="Description of this subpage." />
     <meta property="twitter:image" content="https://femboy.rocks/assets/images/banner.png" />
-
 </head>
 
-<body class="has-gradient">
+<body>
+    <!-- particles -->
     <canvas id="particles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
 
-    <img src="assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
+    <!-- mascot -->
+    <img src="../assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
+
+    <!-- title -->
     <div id="center">
-        <h1>femboy.rocks</h1>
+        <h1>subpage title</h1>
     </div>
 
+    <!-- nav -->
+    <div class="card-buttons">
+        <a href="../more/" class="card-btn">← more</a>
+        <a href="../" class="card-btn">home</a>
+    </div>
+
+    <!-- card -->
     <div class="profile-panel">
         <div class="card">
-            <img src="assets/images/exuumi.jpg" alt="pfp">
+            <!-- icon -->
+            <img src="../assets/images/exuumi.jpg" alt="icon">
             <div class="card-content">
-                <h2 class="username">exuumi</h2>
-                <p>Lua, C++ & Rust Developer. Independant Security Researcher.</p>
+                <h2 class="username">section title</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
             </div>
         </div>
         <div class="card-buttons">
-            <a href="discord://-/users/722638810130939986" class="card-btn">discord</a>
-            <a href="mailto:k@kinija.org" class="card-btn">email</a>
+            <a href="#" class="card-btn">action 1</a>
+            <a href="#" class="card-btn">action 2</a>
         </div>
     </div>
 
-    <div class="profile-panel">
-        <div class="card">
-            <img src="assets/images/vrlx.png" alt="pfp">
-            <div class="card-content">
-                <h2 class="username">vrlx</h2>
-                <p>The quick pink fox jumps over the lazy zog.</p>
-            </div>
-        </div>
-        <div class="card-buttons">
-            <a href="discord://-/users/683045237458731100" class="card-btn">discord</a>
-            <a href="#" class="card-btn">Sample Text</a>
-            <a href="#" class="card-btn">button 3</a>
-            <a href="#" class="card-btn">button 4</a>
-            <a href="#" class="card-btn">button 5</a>
-        </div>
-    </div>
-
-    <hr class="divider">
-
-    <div class="card-buttons">
-        <a href="more/" class="card-btn">more</a>
-    </div>
-    <div style="height: 1500px;"></div>
-
-    <div class="card-buttons">
-        <a href="#" class="card-btn">evil pink button</a>
-    </div>
-
+    <!-- script -->
     <script>
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');

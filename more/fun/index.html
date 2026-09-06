@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>tty theme generator - femboy.rocks</title>
+    <meta name="title" content="tty theme generator - femboy.rocks" />
+    <meta name="description" content="Generate and export Linux TTY and terminal color themes." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://femboy.rocks/more/fun/" />
+    <meta property="og:title" content="tty theme generator - femboy.rocks" />
+    <meta property="og:description" content="Generate and export Linux TTY and terminal color themes." />
+    <meta property="og:image" content="https://femboy.rocks/assets/images/banner.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://femboy.rocks/more/fun/" />
+    <meta property="twitter:title" content="tty theme generator - femboy.rocks" />
+    <meta property="twitter:description" content="Generate and export Linux TTY and terminal color themes." />
+    <meta property="twitter:image" content="https://femboy.rocks/assets/images/banner.png" />
+
+    <style>
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            width: 980px;
+            max-width: 90%;
+            margin: 0 auto 25px auto;
+            box-sizing: border-box;
+        }
+
+        .generator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 980px;
+            max-width: 90%;
+            margin: 0 auto 30px auto;
+            align-items: start;
+            box-sizing: border-box;
+        }
+
+        .generator-grid .profile-panel {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .generator-grid .card {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 24px;
+        }
+
+        .generator-grid .card-buttons {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .grid-left,
+        .grid-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 860px) {
+            .generator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .terminal-screen {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: var(--bg-color, #160B16);
+            color: var(--fg-color, #e0e0e0);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace, 'Courier New', Courier;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            text-align: left;
+            border: 1px solid rgba(231, 146, 193, 0.15);
+            transition: background-color 0.15s ease, color 0.15s ease;
+            overflow-x: auto;
+        }
+
+        .term-prompt {
+            color: var(--c13, #ff8ff9);
+            font-weight: bold;
+        }
+
+        .term-dir {
+            color: var(--c12, #b8d8ff);
+        }
+
+        .term-cat {
+            color: var(--c11, #ffe8b8);
+            font-weight: bold;
+        }
+
+        .term-info-key {
+            color: var(--c9, #ffb8b8);
+        }
+
+        .term-swatch-row {
+            display: flex;
+            gap: 5px;
+            margin: 6px 0;
+        }
+
+        .term-block {
+            width: 22px;
+            height: 16px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .select-wrap {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .theme-select {
+            width: 100%;
+            background: #140d16;
+            color: #ffffff;
+            border: 1px solid rgba(231, 146, 193, 0.25);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: alphalyrae, sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .theme-select:focus {
+            border-color: #ff8ff9;
+        }
+
+        .subheading {
+            font-size: 0.8rem;
+            color: #ffb8b8;
+            text-align: left;
+            margin: 10px 0 6px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subheading:first-of-type {
+            margin-top: 0;
+        }
+
+        .system-palette {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .ansi-palette {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .system-palette,
+            .ansi-palette {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .color-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #130a14;
+            border: 1px solid rgba(231, 146, 193, 0.15);
+            border-radius: 6px;
+            padding: 5px 8px;
+            box-sizing: border-box;
+        }
+
+        .color-chip input[type="color"] {
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            background: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .chip-label {
+            font-size: 0.75rem;
+            color: #bbb;
+            text-align: left;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hex-field {
+            width: 66px;
+            background: #0a040b;
+            border: 1px solid rgba(231, 146, 193, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            font-family: monospace;
+            font-size: 0.78rem;
+            padding: 3px 4px;
+            text-transform: uppercase;
+            outline: none;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .hex-field:focus {
+            border-color: #ff8ff9;
+        }
+
+        .format-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .fmt-pill {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(231, 146, 193, 0.2);
+            background: #140d16;
+            color: #ccc;
+            font-family: alphalyrae, sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .fmt-pill:hover {
+            border-color: #ff8ff9;
+            color: #fff;
+        }
+
+        .fmt-pill.active {
+            background: linear-gradient(90deg, #ffb8b8, #ff8ff9);
+            color: #120410;
+            border-color: transparent;
+            font-weight: bold;
+        }
+
+        .code-box {
+            width: 100%;
+            height: 180px;
+            box-sizing: border-box;
+            background: #09030a;
+            border: 1px solid rgba(231, 146, 193, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            color: #e0e0e0;
+            font-family: monospace;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            resize: vertical;
+            outline: none;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .feedback-toast {
+            font-size: 0.85rem;
+            color: #a8ffb2;
+            min-height: 20px;
+            margin-top: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            text-align: center;
+        }
+
+        .feedback-toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+    <img src="../../assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
+    <div id="center">
+        <h1>tty theme generator</h1>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="../" class="card-btn">← more</a>
+        <a href="../../" class="card-btn">home</a>
+    </div>
+
+    <div class="generator-grid">
+        <div class="grid-left">
+            <div class="profile-panel">
+                <div class="card" style="flex-direction: column; align-items: stretch;">
+                    <div class="card-content" style="transform: none; margin-bottom: 10px;">
+                        <h2 class="username">preview</h2>
+                    </div>
+
+                    <div id="term-display" class="terminal-screen">
+                        <div><span class="term-prompt">~ ❯</span> <span style="color: var(--c10, #c8ffd4);">pfetch</span></div>
+                        <div style="margin-top: 6px; display: flex; gap: 14px; align-items: center;">
+                            <div class="term-cat">
+  /\_/\<br>
+ ( o.o )<br>
+  > ^ <
+                            </div>
+                            <div>
+                                <div><span class="term-info-key">user:</span> femboy@rocks</div>
+                                <div><span class="term-info-key">os:</span> arch linux</div>
+                                <div><span class="term-info-key">wm:</span> sway / tty</div>
+                                <div><span class="term-info-key">theme:</span> <span id="label-theme-name" style="color: var(--c13, #ff8ff9);">femboy.rocks</span></div>
+                            </div>
+                        </div>
+
+                        <div class="term-swatch-row" style="margin-top: 10px;">
+                            <span class="term-block" style="background-color: var(--c0, #180a15)"></span>
+                            <span class="term-block" style="background-color: var(--c1, #ff8f9e)"></span>
+                            <span class="term-block" style="background-color: var(--c2, #b8ffc8)"></span>
+                            <span class="term-block" style="background-color: var(--c3, #ffe8b8)"></span>
+                            <span class="term-block" style="background-color: var(--c4, #b8d8ff)"></span>
+                            <span class="term-block" style="background-color: var(--c5, #e792c1)"></span>
+                            <span class="term-block" style="background-color: var(--c6, #b8f4ff)"></span>
+                            <span class="term-block" style="background-color: var(--c7, #e0e0e0)"></span>
+                        </div>
+                        <div class="term-swatch-row">
+                            <span class="term-block" style="background-color: var(--c8, #271927)"></span>
+                            <span class="term-block" style="background-color: var(--c9, #ffb8b8)"></span>
+                            <span class="term-block" style="background-color: var(--c10, #c8ffd4)"></span>
+                            <span class="term-block" style="background-color: var(--c11, #fff0cc)"></span>
+                            <span class="term-block" style="background-color: var(--c12, #cce4ff)"></span>
+                            <span class="term-block" style="background-color: var(--c13, #ff8ff9)"></span>
+                            <span class="term-block" style="background-color: var(--c14, #ccf8ff)"></span>
+                            <span class="term-block" style="background-color: var(--c15, #ffffff)"></span>
+                        </div>
+
+                        <div style="margin-top: 8px;"><span class="term-prompt">~ ❯</span> <span style="color: var(--c10, #c8ffd4);">echo</span> <span style="color: var(--c11, #ffe8b8);">"stay cozy, stay warm!"</span></div>
+                        <div>stay cozy, stay warm!</div>
+                        <div><span class="term-prompt">~ ❯</span> <span style="display: inline-block; width: 7px; height: 13px; background: var(--cursor-color, #ff8ff9); vertical-align: middle;"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-panel">
+                <div class="card" style="flex-direction: column; align-items: stretch;">
+                    <div class="card-content" style="transform: none; margin-bottom: 10px;">
+                        <h2 class="username">export</h2>
+                    </div>
+
+                    <div class="format-pills">
+                        <button class="fmt-pill active" data-fmt="tty-sh" onclick="setExportFormat('tty-sh', this)">linux tty (.sh)</button>
+                        <button class="fmt-pill" data-fmt="vtrgb" onclick="setExportFormat('vtrgb', this)">/etc/vtrgb</button>
+                        <button class="fmt-pill" data-fmt="tty-issue" onclick="setExportFormat('tty-issue', this)">/etc/issue</button>
+                        <button class="fmt-pill" data-fmt="alacritty" onclick="setExportFormat('alacritty', this)">alacritty</button>
+                        <button class="fmt-pill" data-fmt="kitty" onclick="setExportFormat('kitty', this)">kitty</button>
+                        <button class="fmt-pill" data-fmt="winterm" onclick="setExportFormat('winterm', this)">windows terminal</button>
+                        <button class="fmt-pill" data-fmt="ghostty" onclick="setExportFormat('ghostty', this)">ghostty</button>
+                        <button class="fmt-pill" data-fmt="foot" onclick="setExportFormat('foot', this)">foot</button>
+                        <button class="fmt-pill" data-fmt="xresources" onclick="setExportFormat('xresources', this)">.Xresources</button>
+                        <button class="fmt-pill" data-fmt="wezterm" onclick="setExportFormat('wezterm', this)">wezterm</button>
+                    </div>
+
+                    <textarea id="output-box" class="code-box" readonly></textarea>
+                    <div id="toast-text" class="feedback-toast">copied config to clipboard</div>
+                </div>
+                <div class="card-buttons">
+                    <a href="javascript:void(0)" onclick="copyToClipboard()" class="card-btn">copy config</a>
+                    <a href="javascript:void(0)" onclick="downloadThemeFile()" class="card-btn">download file</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-right">
+            <div class="profile-panel">
+                <div class="card" style="flex-direction: column; align-items: stretch;">
+                    <div class="card-content" style="transform: none; margin-bottom: 10px;">
+                        <h2 class="username">palette</h2>
+                    </div>
+
+                    <div class="select-wrap">
+                        <select id="preset-dropdown" class="theme-select" onchange="applyPreset(this.value)">
+                            <option value="femboy">femboy.rocks</option>
+                            <option value="vga">Default Linux VGA</option>
+                            <option value="catppuccin">Catppuccin Mocha</option>
+                            <option value="dracula">Dracula</option>
+                            <option value="gruvbox">Gruvbox Dark</option>
+                            <option value="nord">Nord</option>
+                            <option value="tokyonight">Tokyo Night</option>
+                            <option value="onedark">One Dark</option>
+                        </select>
+                    </div>
+
+                    <div class="subheading">system</div>
+                    <div class="system-palette">
+                        <div class="color-chip">
+                            <input type="color" id="pick-bg" oninput="handleColorPicker('bg', this.value)">
+                            <span class="chip-label">bg</span>
+                            <input type="text" id="hex-bg" class="hex-field" maxlength="7" oninput="handleHexInput('bg', this.value)">
+                        </div>
+
+                        <div class="color-chip">
+                            <input type="color" id="pick-fg" oninput="handleColorPicker('fg', this.value)">
+                            <span class="chip-label">fg</span>
+                            <input type="text" id="hex-fg" class="hex-field" maxlength="7" oninput="handleHexInput('fg', this.value)">
+                        </div>
+
+                        <div class="color-chip">
+                            <input type="color" id="pick-cursor" oninput="handleColorPicker('cursor', this.value)">
+                            <span class="chip-label">cursor</span>
+                            <input type="text" id="hex-cursor" class="hex-field" maxlength="7" oninput="handleHexInput('cursor', this.value)">
+                        </div>
+
+                        <div class="color-chip">
+                            <input type="color" id="pick-selection" oninput="handleColorPicker('selection', this.value)">
+                            <span class="chip-label">selection</span>
+                            <input type="text" id="hex-selection" class="hex-field" maxlength="7" oninput="handleHexInput('selection', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="subheading">ansi colors</div>
+                    <div id="ansi-chip-grid" class="ansi-palette">
+                    </div>
+                </div>
+                <div class="card-buttons">
+                    <a href="javascript:void(0)" onclick="resetTheme()" class="card-btn">reset to femboy.rocks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const numParticles = 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.15;
+                this.speedY = Math.random() * 0.5 - 0.15;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+    </script>
+
+    <script>
+        const ansiLabels = [
+            '0 black', '1 red', '2 green', '3 yellow',
+            '4 blue', '5 magenta', '6 cyan', '7 white',
+            '8 br black', '9 br red', '10 br green', '11 br yellow',
+            '12 br blue', '13 br magenta', '14 br cyan', '15 br white'
+        ];
+
+        const themePresets = {
+            femboy: {
+                name: "femboy.rocks",
+                bg: "#160b16",
+                fg: "#e0e0e0",
+                cursor: "#ff8ff9",
+                selection: "#2c122a",
+                colors: [
+                    "#1a0b1a", "#ff8f9e", "#b8ffc8", "#ffe8b8",
+                    "#b8d8ff", "#e792c1", "#b8f4ff", "#e0e0e0",
+                    "#2c122a", "#ffb8b8", "#c8ffd4", "#fff0cc",
+                    "#cce4ff", "#ff8ff9", "#ccf8ff", "#ffffff"
+                ]
+            },
+            vga: {
+                name: "Default Linux VGA",
+                bg: "#000000",
+                fg: "#aaaaaa",
+                cursor: "#ffffff",
+                selection: "#555555",
+                colors: [
+                    "#000000", "#aa0000", "#00aa00", "#aa5500",
+                    "#0000aa", "#aa00aa", "#00aaaa", "#aaaaaa",
+                    "#555555", "#ff5555", "#55ff55", "#ffff55",
+                    "#5555ff", "#ff55ff", "#55ffff", "#ffffff"
+                ]
+            },
+            catppuccin: {
+                name: "Catppuccin Mocha",
+                bg: "#1e1e2e",
+                fg: "#cdd6f4",
+                cursor: "#f5e0dc",
+                selection: "#45475a",
+                colors: [
+                    "#45475a", "#f38ba8", "#a6e3a1", "#f9e2af",
+                    "#89b4fa", "#f5c2e7", "#94e2d5", "#bac2de",
+                    "#585b70", "#f38ba8", "#a6e3a1", "#f9e2af",
+                    "#89b4fa", "#f5c2e7", "#94e2d5", "#a6adc8"
+                ]
+            },
+            dracula: {
+                name: "Dracula",
+                bg: "#282a36",
+                fg: "#f8f8f2",
+                cursor: "#f8f8f2",
+                selection: "#44475a",
+                colors: [
+                    "#21222c", "#ff5555", "#50fa7b", "#f1fa8c",
+                    "#bd93f9", "#ff79c6", "#8be9fd", "#f8f8f2",
+                    "#6272a4", "#ff6e6e", "#69ff94", "#ffffa5",
+                    "#d6acff", "#ff92df", "#a4ffff", "#ffffff"
+                ]
+            },
+            gruvbox: {
+                name: "Gruvbox Dark",
+                bg: "#282828",
+                fg: "#ebdbb2",
+                cursor: "#ebdbb2",
+                selection: "#504945",
+                colors: [
+                    "#282828", "#cc241d", "#98971a", "#d79921",
+                    "#458588", "#b16286", "#689d6a", "#a89984",
+                    "#928374", "#fb4934", "#b8bb26", "#fabd2f",
+                    "#83a598", "#d3869b", "#8ec07c", "#ebdbb2"
+                ]
+            },
+            nord: {
+                name: "Nord",
+                bg: "#2e3440",
+                fg: "#eceff4",
+                cursor: "#d8dee9",
+                selection: "#434c5e",
+                colors: [
+                    "#3b4252", "#bf616a", "#a3be8c", "#ebcb8b",
+                    "#81a1c1", "#b48ead", "#88c0d0", "#e5e9f0",
+                    "#4c566a", "#bf616a", "#a3be8c", "#ebcb8b",
+                    "#81a1c1", "#b48ead", "#8fbcbb", "#eceff4"
+                ]
+            },
+            tokyonight: {
+                name: "Tokyo Night",
+                bg: "#1a1b26",
+                fg: "#c0caf5",
+                cursor: "#c0caf5",
+                selection: "#283457",
+                colors: [
+                    "#15161e", "#f7768e", "#9ece6a", "#e0af68",
+                    "#7aa2f7", "#bb9af7", "#7dcfff", "#a9b1d6",
+                    "#414868", "#f7768e", "#9ece6a", "#e0af68",
+                    "#7aa2f7", "#bb9af7", "#7dcfff", "#c0caf5"
+                ]
+            },
+            onedark: {
+                name: "One Dark",
+                bg: "#282c34",
+                fg: "#abb2bf",
+                cursor: "#528bff",
+                selection: "#3e4451",
+                colors: [
+                    "#282c34", "#e06c75", "#98c379", "#e5c07b",
+                    "#61afef", "#c678dd", "#56b6c2", "#abb2bf",
+                    "#5c6370", "#e06c75", "#98c379", "#e5c07b",
+                    "#61afef", "#c678dd", "#56b6c2", "#ffffff"
+                ]
+            }
+        };
+
+        let currentTheme = JSON.parse(JSON.stringify(themePresets.femboy));
+        let selectedFormat = 'tty-sh';
+
+        function renderAnsiGrid() {
+            const grid = document.getElementById('ansi-chip-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 16; i++) {
+                const chip = document.createElement('div');
+                chip.className = 'color-chip';
+                chip.innerHTML = `
+                    <input type="color" id="pick-ansi-${i}" oninput="handleAnsiPicker(${i}, this.value)">
+                    <span class="chip-label">${ansiLabels[i]}</span>
+                    <input type="text" id="hex-ansi-${i}" class="hex-field" maxlength="7" oninput="handleAnsiHex(${i}, this.value)">
+                `;
+                grid.appendChild(chip);
+            }
+        }
+
+        function formatHex(val) {
+            val = val.trim();
+            if (!val.startsWith('#')) val = '#' + val;
+            return val.toLowerCase();
+        }
+
+        function validateHex(val) {
+            return /^#[0-9A-Fa-f]{6}$/.test(val);
+        }
+
+        function handleColorPicker(key, val) {
+            currentTheme[key] = val.toLowerCase();
+            document.getElementById(`hex-${key}`).value = val.toUpperCase();
+            updateLivePreview();
+            updateExportCode();
+        }
+
+        function handleHexInput(key, val) {
+            const hex = formatHex(val);
+            if (validateHex(hex)) {
+                currentTheme[key] = hex;
+                document.getElementById(`pick-${key}`).value = hex;
+                updateLivePreview();
+                updateExportCode();
+            }
+        }
+
+        function handleAnsiPicker(i, val) {
+            currentTheme.colors[i] = val.toLowerCase();
+            document.getElementById(`hex-ansi-${i}`).value = val.toUpperCase();
+            updateLivePreview();
+            updateExportCode();
+        }
+
+        function handleAnsiHex(i, val) {
+            const hex = formatHex(val);
+            if (validateHex(hex)) {
+                currentTheme.colors[i] = hex;
+                document.getElementById(`pick-ansi-${i}`).value = hex;
+                updateLivePreview();
+                updateExportCode();
+            }
+        }
+
+        function updateLivePreview() {
+            const screen = document.getElementById('term-display');
+            screen.style.setProperty('--bg-color', currentTheme.bg);
+            screen.style.setProperty('--fg-color', currentTheme.fg);
+            screen.style.setProperty('--cursor-color', currentTheme.cursor);
+
+            for (let i = 0; i < 16; i++) {
+                screen.style.setProperty(`--c${i}`, currentTheme.colors[i]);
+            }
+
+            document.getElementById('label-theme-name').textContent = currentTheme.name;
+        }
+
+        function populateForm() {
+            document.getElementById('pick-bg').value = currentTheme.bg;
+            document.getElementById('hex-bg').value = currentTheme.bg.toUpperCase();
+
+            document.getElementById('pick-fg').value = currentTheme.fg;
+            document.getElementById('hex-fg').value = currentTheme.fg.toUpperCase();
+
+            document.getElementById('pick-cursor').value = currentTheme.cursor;
+            document.getElementById('hex-cursor').value = currentTheme.cursor.toUpperCase();
+
+            document.getElementById('pick-selection').value = currentTheme.selection;
+            document.getElementById('hex-selection').value = currentTheme.selection.toUpperCase();
+
+            for (let i = 0; i < 16; i++) {
+                document.getElementById(`pick-ansi-${i}`).value = currentTheme.colors[i];
+                document.getElementById(`hex-ansi-${i}`).value = currentTheme.colors[i].toUpperCase();
+            }
+        }
+
+        function applyPreset(key) {
+            if (themePresets[key]) {
+                currentTheme = JSON.parse(JSON.stringify(themePresets[key]));
+                populateForm();
+                updateLivePreview();
+                updateExportCode();
+            }
+        }
+
+        function resetTheme() {
+            document.getElementById('preset-dropdown').value = 'femboy';
+            applyPreset('femboy');
+        }
+
+        function setExportFormat(fmt, btnElement) {
+            selectedFormat = fmt;
+            document.querySelectorAll('.fmt-pill').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                const found = document.querySelector(`.fmt-pill[data-fmt="${fmt}"]`);
+                if (found) found.classList.add('active');
+            }
+            updateExportCode();
+        }
+
+        function rawHex(val) {
+            return val.replace('#', '').toUpperCase();
+        }
+
+        function hexToRgb(hex) {
+            const clean = rawHex(hex);
+            return {
+                r: parseInt(clean.substring(0, 2), 16),
+                g: parseInt(clean.substring(2, 4), 16),
+                b: parseInt(clean.substring(4, 6), 16)
+            };
+        }
+
+        function updateExportCode() {
+            const c = currentTheme.colors;
+            const bg = currentTheme.bg;
+            const fg = currentTheme.fg;
+            const cursor = currentTheme.cursor;
+            const sel = currentTheme.selection;
+            const name = currentTheme.name;
+
+            let code = '';
+
+            if (selectedFormat === 'tty-sh') {
+                code = `#!/bin/sh\n# ${name} - Linux TTY Color Theme\n# Source or execute in virtual console (TTY 1-6) / add to ~/.bashrc or ~/.zshrc\n\nif [ "$TERM" = "linux" ]; then\n`;
+                const chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+                for (let i = 0; i < 16; i++) {
+                    code += `    printf '\\033]P%s%s' '${chars[i]}' '${rawHex(c[i])}' # ${ansiLabels[i]}\n`;
+                }
+                code += `    printf '\\033c' # reset and redraw console with new palette\nfi\n`;
+            } else if (selectedFormat === 'vtrgb') {
+                const rgbList = c.map(hex => hexToRgb(hex));
+                const rRow = rgbList.map(item => item.r).join(',');
+                const gRow = rgbList.map(item => item.g).join(',');
+                const bRow = rgbList.map(item => item.b).join(',');
+                code = `# ${name} for /etc/vtrgb\n# Apply with: sudo setvtrgb /etc/vtrgb\n${rRow}\n${gRow}\n${bRow}\n`;
+            } else if (selectedFormat === 'tty-issue') {
+                code = `\\e[H\\e[J\\e]P0${rawHex(c[0])}\\e]P1${rawHex(c[1])}\\e]P2${rawHex(c[2])}\\e]P3${rawHex(c[3])}\\e]P4${rawHex(c[4])}\\e]P5${rawHex(c[5])}\\e]P6${rawHex(c[6])}\\e]P7${rawHex(c[7])}\\e]P8${rawHex(c[8])}\\e]P9${rawHex(c[9])}\\e]PA${rawHex(c[10])}\\e]PB${rawHex(c[11])}\\e]PC${rawHex(c[12])}\\e]PD${rawHex(c[13])}\\e]PE${rawHex(c[14])}\\e]PF${rawHex(c[15])}\n\\s \\r (\\l)\n\n`;
+            } else if (selectedFormat === 'alacritty') {
+                code = `# ${name} for Alacritty (alacritty.toml)\n[colors.primary]\nbackground = "${bg}"\nforeground = "${fg}"\n\n[colors.cursor]\ntext = "${bg}"\ncursor = "${cursor}"\n\n[colors.selection]\ntext = "${fg}"\nbackground = "${sel}"\n\n[colors.normal]\nblack = "${c[0]}"\nred = "${c[1]}"\ngreen = "${c[2]}"\nyellow = "${c[3]}"\nblue = "${c[4]}"\nmagenta = "${c[5]}"\ncyan = "${c[6]}"\nwhite = "${c[7]}"\n\n[colors.bright]\nblack = "${c[8]}"\nred = "${c[9]}"\ngreen = "${c[10]}"\nyellow = "${c[11]}"\nblue = "${c[12]}"\nmagenta = "${c[13]}"\ncyan = "${c[14]}"\nwhite = "${c[15]}"\n`;
+            } else if (selectedFormat === 'kitty') {
+                code = `# ${name} for Kitty (kitty.conf)\nbackground ${bg}\nforeground ${fg}\ncursor ${cursor}\nselection_background ${sel}\nselection_foreground ${fg}\n\ncolor0 ${c[0]}\ncolor1 ${c[1]}\ncolor2 ${c[2]}\ncolor3 ${c[3]}\ncolor4 ${c[4]}\ncolor5 ${c[5]}\ncolor6 ${c[6]}\ncolor7 ${c[7]}\n\ncolor8  ${c[8]}\ncolor9  ${c[9]}\ncolor10 ${c[10]}\ncolor11 ${c[11]}\ncolor12 ${c[12]}\ncolor13 ${c[13]}\ncolor14 ${c[14]}\ncolor15 ${c[15]}\n`;
+            } else if (selectedFormat === 'winterm') {
+                const wtObj = {
+                    name: name,
+                    background: bg.toUpperCase(),
+                    foreground: fg.toUpperCase(),
+                    cursorColor: cursor.toUpperCase(),
+                    selectionBackground: sel.toUpperCase(),
+                    black: c[0].toUpperCase(),
+                    red: c[1].toUpperCase(),
+                    green: c[2].toUpperCase(),
+                    yellow: c[3].toUpperCase(),
+                    blue: c[4].toUpperCase(),
+                    purple: c[5].toUpperCase(),
+                    cyan: c[6].toUpperCase(),
+                    white: c[7].toUpperCase(),
+                    brightBlack: c[8].toUpperCase(),
+                    brightRed: c[9].toUpperCase(),
+                    brightGreen: c[10].toUpperCase(),
+                    brightYellow: c[11].toUpperCase(),
+                    brightBlue: c[12].toUpperCase(),
+                    brightPurple: c[13].toUpperCase(),
+                    brightCyan: c[14].toUpperCase(),
+                    brightWhite: c[15].toUpperCase()
+                };
+                code = JSON.stringify(wtObj, null, 2);
+            } else if (selectedFormat === 'ghostty') {
+                code = `# ${name} for Ghostty (config)\nbackground = ${bg}\nforeground = ${fg}\ncursor-color = ${cursor}\nselection-background = ${sel}\nselection-foreground = ${fg}\n\n`;
+                for (let i = 0; i < 16; i++) {
+                    code += `palette = ${i}=${c[i]}\n`;
+                }
+            } else if (selectedFormat === 'foot') {
+                code = `# ${name} for Foot (foot.ini)\n[colors]\nbackground=${rawHex(bg).toLowerCase()}\nforeground=${rawHex(fg).toLowerCase()}\ncursor=${rawHex(cursor).toLowerCase()} ${rawHex(bg).toLowerCase()}\nselection-background=${rawHex(sel).toLowerCase()}\nselection-foreground=${rawHex(fg).toLowerCase()}\n\nregular0=${rawHex(c[0]).toLowerCase()}\nregular1=${rawHex(c[1]).toLowerCase()}\nregular2=${rawHex(c[2]).toLowerCase()}\nregular3=${rawHex(c[3]).toLowerCase()}\nregular4=${rawHex(c[4]).toLowerCase()}\nregular5=${rawHex(c[5]).toLowerCase()}\nregular6=${rawHex(c[6]).toLowerCase()}\nregular7=${rawHex(c[7]).toLowerCase()}\n\nbright0=${rawHex(c[8]).toLowerCase()}\nbright1=${rawHex(c[9]).toLowerCase()}\nbright2=${rawHex(c[10]).toLowerCase()}\nbright3=${rawHex(c[11]).toLowerCase()}\nbright4=${rawHex(c[12]).toLowerCase()}\nbright5=${rawHex(c[13]).toLowerCase()}\nbright6=${rawHex(c[14]).toLowerCase()}\nbright7=${rawHex(c[15]).toLowerCase()}\n`;
+            } else if (selectedFormat === 'xresources') {
+                code = `! ${name} for Xresources (~/.Xresources)\n*.background: ${bg}\n*.foreground: ${fg}\n*.cursorColor: ${cursor}\n\n*.color0: ${c[0]}\n*.color1: ${c[1]}\n*.color2: ${c[2]}\n*.color3: ${c[3]}\n*.color4: ${c[4]}\n*.color5: ${c[5]}\n*.color6: ${c[6]}\n*.color7: ${c[7]}\n\n*.color8: ${c[8]}\n*.color9: ${c[9]}\n*.color10: ${c[10]}\n*.color11: ${c[11]}\n*.color12: ${c[12]}\n*.color13: ${c[13]}\n*.color14: ${c[14]}\n*.color15: ${c[15]}\n`;
+            } else if (selectedFormat === 'wezterm') {
+                code = `-- ${name} for WezTerm (wezterm.lua)\nreturn {\n  colors = {\n    background = '${bg}',\n    foreground = '${fg}',\n    cursor_bg = '${cursor}',\n    cursor_fg = '${bg}',\n    selection_bg = '${sel}',\n    selection_fg = '${fg}',\n    ansi = {\n      '${c[0]}', '${c[1]}', '${c[2]}', '${c[3]}',\n      '${c[4]}', '${c[5]}', '${c[6]}', '${c[7]}',\n    },\n    brights = {\n      '${c[8]}', '${c[9]}', '${c[10]}', '${c[11]}',\n      '${c[12]}', '${c[13]}', '${c[14]}', '${c[15]}',\n    },\n  },\n}\n`;
+            }
+
+            document.getElementById('output-box').value = code;
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('output-box').value;
+            navigator.clipboard.writeText(text);
+            const toast = document.getElementById('toast-text');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function downloadThemeFile() {
+            const text = document.getElementById('output-box').value;
+            const extMap = {
+                'tty-sh': 'femboy-tty.sh',
+                'vtrgb': 'vtrgb',
+                'tty-issue': 'issue',
+                'alacritty': 'alacritty.toml',
+                'kitty': 'kitty.conf',
+                'winterm': 'femboy-rocks-wt.json',
+                'ghostty': 'config',
+                'foot': 'foot.ini',
+                'xresources': '.Xresources',
+                'wezterm': 'femboy_rocks.lua'
+            };
+            const filename = extMap[selectedFormat] || 'theme.txt';
+
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        renderAnsiGrid();
+        populateForm();
+        updateLivePreview();
+        updateExportCode();
+    </script>
+</body>
+
+</html>
