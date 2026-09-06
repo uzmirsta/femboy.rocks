@@ -13,7 +13,8 @@
 }
 
 body {
-    background-color: #070306;
+    background: #0D0C0E;
+    background: linear-gradient(180deg, rgba(13, 12, 14, 1) 0%, rgba(13, 12, 14, 1) 50%, rgba(255, 147, 221, 1) 100%);
     color: white;
     text-align: center;
     font-family: ADAXI;
@@ -26,15 +27,6 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
     box-sizing: border-box;
-}
-
-body.centered-page {
-    justify-content: flex-start;
-    padding-bottom: 40px;
-}
-
-body.centered-page .huge-btn-container {
-    margin: auto 0;
 }
 
 html::-webkit-scrollbar {
@@ -57,7 +49,30 @@ h1 {
     width: auto;
 }
 
-#card,
+.profile-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 600px;
+    max-width: 90%;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, #151216, #271927) padding-box, linear-gradient(90deg, #e7c6c6, #E792C1) border-box;
+    overflow: visible;
+}
+
+.profile-panel .card {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    background: none;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+
 .card {
     display: flex;
     align-items: center;
@@ -70,14 +85,9 @@ h1 {
     padding: 30px;
     border-radius: 10px;
     border: 1px solid transparent;
-    background: linear-gradient(135deg, #180a15, #0f050e) padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
+    background: linear-gradient(135deg, #151216, #271927) padding-box, linear-gradient(90deg, #e7c6c6, #E792C1) border-box;
 }
 
-.card+.card {
-    margin-top: 20px;
-}
-
-#card img,
 .card img {
     width: 110px;
     height: 110px;
@@ -87,29 +97,23 @@ h1 {
     background-color: #190916;
 }
 
-#card .card-content,
 .card .card-content {
     flex: 1;
     transform: translateY(-14px);
 }
 
-#card .username,
 .card .username {
     margin: 0 0 4px 0;
     font-size: 1.8rem;
     line-height: 1.1;
     letter-spacing: -1px;
-    background: linear-gradient(90deg, #ffb8b8, #ff8ff9);
+    background: linear-gradient(90deg, #f48fb1, #E792C1);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
 
-p {
-    font-family: alphalyrae, sans-serif;
-}
-
-#card p,
+p,
 .card p {
     margin: 0;
     color: #e0e0e0;
@@ -159,6 +163,43 @@ button {
     transform: translateY(0);
 }
 
+.profile-panel .card-buttons {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    gap: 0;
+    background: transparent;
+}
+
+.profile-panel .card-btn {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0;
+    background: transparent padding-box, transparent border-box;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
+}
+
+.profile-panel .card-btn:first-child {
+    border-radius: 0 0 0 10px;
+}
+
+.profile-panel .card-btn:last-child {
+    border-radius: 0 0 10px 0;
+}
+
+.profile-panel .card-btn:first-child:last-child {
+    border-radius: 0 0 10px 10px;
+}
+
+.profile-panel .card-btn:hover {
+    transform: translateY(8px);
+    filter: brightness(1.15);
+    background: #180a15 padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
+    z-index: 2;
+}
+
 .divider {
     width: 600px;
     max-width: 90%;
@@ -166,54 +207,6 @@ button {
     border: none;
     background: linear-gradient(90deg, #ffb8b8, #ff8ff9);
     margin: 0 auto 20px auto;
-    opacity: 0.8;
-}
-
-.huge-btn-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 600px;
-    max-width: 90%;
-    margin-top: 20px;
-    box-sizing: border-box;
-}
-
-.huge-btn {
-    width: 100%;
-    min-height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: alphalyrae, sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: -1px;
-    color: white;
-    border-radius: 16px;
-    border: 2px solid transparent;
-    background: linear-gradient(135deg, #180a15, #0f050e) padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
-    cursor: pointer;
-    user-select: none;
-    padding: 30px;
-    box-sizing: border-box;
-    transition: transform 0.12s ease, filter 0.15s ease;
-}
-
-.huge-btn:hover {
-    transform: translateY(-3px) scale(1.01);
-    filter: brightness(1.25);
-}
-
-.huge-btn:active {
-    transform: translateY(3px) scale(0.98);
-    filter: brightness(0.9);
-}
-
-.click-count {
-    color: #ffb8b8;
-    font-size: 1.2rem;
-    margin: 0;
     opacity: 0.8;
 }
 
