@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: alphalyrae;
+    src: url('assets/alphalyrae.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-color: #070306;
     color: white;
@@ -98,11 +105,20 @@ h1 {
     display: inline-block;
 }
 
+p {
+    font-family: alphalyrae, sans-serif;
+}
+
 #card p,
 .card p {
     margin: 0;
     color: #e0e0e0;
     line-height: 1.3;
+    font-family: alphalyrae, sans-serif;
+}
+
+button {
+    font-family: alphalyrae, sans-serif;
 }
 
 .card-buttons {
@@ -126,7 +142,7 @@ h1 {
     border: 1px solid transparent;
     background: linear-gradient(135deg, #180a15, #0f050e) padding-box, linear-gradient(90deg, #ffb8b8, #ff8ff9) border-box;
     color: white;
-    font-family: inherit;
+    font-family: alphalyrae, sans-serif;
     font-size: 1.1rem;
     text-decoration: none;
     cursor: pointer;
@@ -170,7 +186,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: inherit;
+    font-family: alphalyrae, sans-serif;
     font-size: 2.2rem;
     letter-spacing: -1px;
     color: white;
