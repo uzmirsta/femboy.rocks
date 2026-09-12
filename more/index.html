@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
     <link rel="stylesheet" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,7 +28,8 @@
 </head>
 
 <body>
-    <canvas id="particles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+    <canvas id="particles"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
 
     <img src="../assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
     <div id="center">
@@ -62,7 +64,38 @@
         </div>
     </div>
 
+    <div class="profile-panel">
+        <div class="card">
+            <img src="../assets/images/badge.png" alt="femboy.rocks badge" class="badge-img">
+            <div class="card-content" style="transform: none;">
+                <h2 class="username">site badge</h2>
+                <p>88x31 button to embed on your personal site or webring</p>
+            </div>
+        </div>
+        <div class="card-buttons">
+            <a href="#" class="card-btn" id="badge-copy-btn">copy html</a>
+        </div>
+    </div>
+
     <script src="../assets/particles.js"></script>
+    <script>
+        const badgeBtn = document.getElementById('badge-copy-btn');
+        if (badgeBtn) {
+            badgeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const snippet = '<a href="https://femboy.rocks"><img src="https://femboy.rocks/assets/images/badge.png" alt="femboy.rocks" width="88" height="31"></a>';
+                navigator.clipboard.writeText(snippet).then(() => {
+                    const original = badgeBtn.textContent;
+                    badgeBtn.textContent = 'copied html!';
+                    setTimeout(() => {
+                        badgeBtn.textContent = original;
+                    }, 2000);
+                }).catch(() => {
+                    prompt('Copy badge HTML:', snippet);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

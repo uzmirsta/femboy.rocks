@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -28,7 +29,8 @@
 </head>
 
 <body>
-    <canvas id="particles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+    <canvas id="particles"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
 
     <img src="assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
     <div id="center">
@@ -37,7 +39,7 @@
 
     <div class="profile-panel">
         <div class="card">
-            <img src="assets/images/exuumi.jpg" alt="pfp">
+            <img src="assets/images/exuumi.png" alt="pfp">
             <div class="card-content">
                 <h2 class="username">exuumi</h2>
                 <p>Lua, C++ & Rust Developer. Independant Security Researcher.</p>
@@ -72,11 +74,12 @@
     <div style="height: 4000px;"></div>
 
     <div class="card-buttons bottom-spacer">
-        <a href="more/pink.html" class="card-btn">evil pink button</a>
+        <a href="/more/pink" class="card-btn">evil pink button</a>
     </div>
 
     <script src="assets/particles.js"></script>
     <script>
+
         const fadeTargets = [
             [document.querySelector('.bg-character-left'), parseFloat(getComputedStyle(document.querySelector('.bg-character-left')).opacity)],
             [document.getElementById('particles'), 1]

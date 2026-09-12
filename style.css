@@ -237,6 +237,18 @@ button {
     object-position: bottom left;
 }
 
+.card img.badge-img {
+    width: 88px;
+    height: 31px;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: transparent;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
 @media (max-width: 600px) {
     .bg-character-left {
         display: none;
