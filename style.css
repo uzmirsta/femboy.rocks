@@ -13,7 +13,7 @@
 }
 
 body {
-    background-color: #0D0C0E;
+    background: #0D0C0E linear-gradient(180deg, #1a1016 0%, #4a2035 25%, #8f4468 45%, #ff93dd 70%, #ff93dd 100%);
     color: white;
     text-align: center;
     font-family: ADAXI;
@@ -28,9 +28,7 @@ body {
     box-sizing: border-box;
 }
 
-body.has-gradient {
-    background: #0D0C0E linear-gradient(180deg, rgba(13, 12, 14, 1) 0%, rgba(13, 12, 14, 1) 50%, rgba(255, 147, 221, 1) 100%);
-}
+
 
 html::-webkit-scrollbar {
     display: none;
@@ -40,10 +38,18 @@ h1 {
     font-size: 3.4rem;
     letter-spacing: -2px;
     text-align: center;
-    background: linear-gradient(90deg, #ffb8b8, #ff8ff9);
+    background: linear-gradient(90deg, #ffb8b8, #ff8ff9, #ffb8b8);
+    background-size: 200% auto;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: title-gradient 8s linear infinite;
     margin: 40px 0 25px 0;
+}
+
+@keyframes title-gradient {
+    to {
+        background-position: 200% center;
+    }
 }
 
 #center {
@@ -136,6 +142,10 @@ button {
     margin-top: 15px;
     margin-bottom: 40px;
     box-sizing: border-box;
+}
+
+.card-buttons.bottom-spacer {
+    margin-bottom: calc(50vh - 86px);
 }
 
 .card-btn {

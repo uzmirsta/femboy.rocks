@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="pinkstyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- meta -->
+    <title>pink - femboy.rocks</title>
+    <meta name="title" content="pink - femboy.rocks" />
+    <meta name="description" content="pink." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://femboy.rocks/more/pink" />
+    <meta property="og:title" content="pink - femboy.rocks" />
+    <meta property="og:description" content="pink." />
+    <meta property="og:image" content="https://femboy.rocks/assets/images/pink.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://femboy.rocks/more/pink" />
+    <meta property="twitter:title" content="pink - femboy.rocks" />
+    <meta property="twitter:description" content="pink." />
+    <meta property="twitter:image" content="https://femboy.rocks/assets/images/banner.png" />
+</head>
+
+<body>
+
+    <div id="center">
+        <h1 id="pink-title">pink</h1>
+    </div>
+
+    <script>
+        const title = document.getElementById('pink-title');
+        title.addEventListener('click', () => {
+            title.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 2000);
+        });
+    </script>
+
+</body>
+
+</html>
