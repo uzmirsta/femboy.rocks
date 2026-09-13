@@ -1,6 +1,6 @@
 @font-face {
     font-family: ADAXI;
-    src: url('assets/adaxi.woff2');
+    src: url('../../assets/adaxi.woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -26,6 +26,7 @@ html::-webkit-scrollbar {
 }
 
 h1 {
+    font-family: ADAXI;
     display: flex;
     font-size: 3.4rem;
     letter-spacing: -2px;
