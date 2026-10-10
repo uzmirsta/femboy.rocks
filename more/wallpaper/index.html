@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="wallpaper.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>wallpaper maker - femboy.rocks</title>
+    <meta name="title" content="wallpaper maker - femboy.rocks" />
+    <meta name="description"
+        content="Create custom femboy.rocks wallpapers with custom gradients, sparkles, text layouts, and mascots." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://femboy.rocks/more/wallpaper/" />
+    <meta property="og:title" content="wallpaper maker - femboy.rocks" />
+    <meta property="og:description"
+        content="Create custom femboy.rocks wallpapers with custom gradients, sparkles, text layouts, and mascots." />
+    <meta property="og:image" content="https://femboy.rocks/assets/images/banner.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://femboy.rocks/more/wallpaper/" />
+    <meta property="twitter:title" content="wallpaper maker - femboy.rocks" />
+    <meta property="twitter:description"
+        content="Create custom femboy.rocks wallpapers with custom gradients, sparkles, text layouts, and mascots." />
+    <meta property="twitter:image" content="https://femboy.rocks/assets/images/banner.png" />
+</head>
+
+<body>
+    <a href="#controls" class="skip-link">Skip to wallpaper settings</a>
+    <a href="#preview" class="skip-link">Skip to wallpaper preview</a>
+
+    <canvas id="particles"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+    <img src="../../assets/images/astolfo.png" alt="Astolfo" class="bg-character-left">
+
+    <div id="center">
+        <h1>wallpaper maker</h1>
+    </div>
+
+    <nav class="nav-buttons" aria-label="Page navigation">
+        <a href="../" class="card-btn">← more</a>
+        <a href="../../" class="card-btn">home</a>
+    </nav>
+
+    <div class="app">
+        <aside class="controls" id="controls" aria-label="Wallpaper settings">
+            <p class="sub">Fonts, colors, and sparkles pulled directly from femboy.rocks.</p>
+
+            <section class="panel" aria-labelledby="canvas-heading">
+                <h2 id="canvas-heading">canvas</h2>
+                <div class="field">
+                    <label for="preset">size preset</label>
+                    <select id="preset"></select>
+                </div>
+                <div class="inline dims">
+                    <div class="dim-input-group">
+                        <label for="w" class="sr-only">Width in pixels</label>
+                        <input type="number" id="w" min="64" max="8192" step="1" aria-label="Width in pixels" placeholder="Width">
+                    </div>
+                    <span class="x" aria-hidden="true">×</span>
+                    <div class="dim-input-group">
+                        <label for="h" class="sr-only">Height in pixels</label>
+                        <input type="number" id="h" min="64" max="8192" step="1" aria-label="Height in pixels" placeholder="Height">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="frame">place text inside crop</label>
+                    <select id="frame">
+                        <option value="full">whole canvas</option>
+                        <option value="16:9">16:9 crop</option>
+                        <option value="16:10">16:10 crop</option>
+                        <option value="21:9">21:9 crop</option>
+                        <option value="9:19.5">phone crop (9:19.5)</option>
+                        <option value="1:1">square crop</option>
+                    </select>
+                </div>
+                <label class="check">
+                    <input type="checkbox" id="guides">
+                    <span>show crop guides on the preview</span>
+                </label>
+            </section>
+
+            <section class="panel" id="bgPanel" aria-labelledby="bg-heading">
+                <h2 id="bg-heading">background</h2>
+                <div class="field">
+                    <label for="seed">seed</label>
+                    <div class="inline">
+                        <input type="number" id="seed" min="0" max="999999" step="1" aria-label="Random seed number">
+                        <button class="btn small" id="roll" type="button" aria-label="Reroll random seed">reroll</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="textPanel" aria-labelledby="text-heading">
+                <h2 id="text-heading">text</h2>
+                <div class="field">
+                    <label for="title">title text</label>
+                    <textarea id="title" rows="2" placeholder="Title text"></textarea>
+                </div>
+                <div class="field">
+                    <label for="subtitle">subtitle text</label>
+                    <textarea id="subtitle" rows="2" placeholder="Subtitle text (optional)"></textarea>
+                </div>
+                <div class="field">
+                    <label for="font">title font (big text)</label>
+                    <select id="font">
+                        <option value="ADAXI" selected>ADAXI (site headings)</option>
+                        <option value="alphalyrae">alpha lyrae</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="sfont">subtitle font (subtext)</label>
+                    <select id="sfont">
+                        <option value="alphalyrae" selected>alpha lyrae (site font)</option>
+                        <option value="ADAXI">ADAXI</option>
+                    </select>
+                </div>
+                <p class="hint" id="glyphHint" role="status" aria-live="polite" hidden></p>
+                <div class="field">
+                    <label for="fill">title color style</label>
+                    <select id="fill">
+                        <option value="site">site title gradient</option>
+                        <option value="name">username pink gradient</option>
+                        <option value="lilac">flat lilac</option>
+                        <option value="white">white</option>
+                    </select>
+                </div>
+                <label class="check">
+                    <input type="checkbox" id="card">
+                    <span>put text on a card like the site</span>
+                </label>
+                <div class="lbl" id="text-pos-label" style="margin-bottom:6px">text position</div>
+                <div class="grid3" id="textGrid" role="group" aria-labelledby="text-pos-label"></div>
+            </section>
+
+            <section class="panel" id="imgPanel" aria-labelledby="img-heading">
+                <h2 id="img-heading">mascot</h2>
+                <div class="field">
+                    <label for="imgSrc">mascot image</label>
+                    <select id="imgSrc">
+                        <option value="none">none</option>
+                        <option value="astolfo">astolfo (from the site)</option>
+                        <option value="upload">my own image</option>
+                    </select>
+                </div>
+                <div class="field" id="uploadField" hidden>
+                    <label for="imgFile">upload image file</label>
+                    <input type="file" id="imgFile" accept="image/*" aria-label="Upload custom image file">
+                </div>
+                <div class="lbl" id="img-pos-label" style="margin-bottom:6px">mascot position</div>
+                <div class="grid3" id="imgGrid" role="group" aria-labelledby="img-pos-label"></div>
+            </section>
+
+            <section class="panel" aria-labelledby="save-heading">
+                <h2 id="save-heading">save & export</h2>
+                <div class="field">
+                    <label for="fmt">file format</label>
+                    <select id="fmt">
+                        <option value="png">PNG (lossless)</option>
+                        <option value="jpg">JPG (smaller)</option>
+                        <option value="webp">WebP (modern)</option>
+                    </select>
+                </div>
+                <div class="btn-row">
+                    <button class="btn" id="save" type="button">download wallpaper</button>
+                </div>
+                <div class="btn-row" style="margin-top:10px">
+                    <button class="btn small" id="reset" type="button">reset to defaults</button>
+                </div>
+                <div class="status" id="status" role="status" aria-live="polite"></div>
+            </section>
+        </aside>
+
+        <main class="preview" id="preview" aria-label="Wallpaper preview">
+            <div class="stage-wrap">
+                <div class="stage">
+                    <canvas id="cv" role="img" aria-label="Interactive wallpaper preview rendering"></canvas>
+                    <canvas id="guideLayer" aria-hidden="true"></canvas>
+                </div>
+                <div class="meta">
+                    <span id="dims" aria-live="polite"></span>
+                    <span>Preview is scaled down; downloads render at full resolution</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/particles.js"></script>
+    <script src="wallpaper.js"></script>
+</body>
+
+</html>
