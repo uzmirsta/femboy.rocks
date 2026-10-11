@@ -89,7 +89,7 @@ for (const [v, label] of PRESETS) {
 
 const DEFAULTS = {
   preset: '3840x2160', w: 3840, h: 2160, frame: 'full', guides: false, seed: 4817,
-  title: 'femboy.rocks', subtitle: '', font: 'ADAXI', sfont: 'alphalyrae', fill: 'site', card: false,
+  title: 'femboy.rocks', subtitle: '', font: 'ADAXI', sfont: 'ADAXI', fill: 'site', card: false,
   imgSrc: 'none', fmt: 'png'
 };
 for (const [panelId, list] of Object.entries(sliderSpecs)) {
@@ -438,8 +438,8 @@ function drawText(ctx, W, H, v) {
   if (!titleLines.length && !subLines.length) return;
   const fr = frameRect(W, H, v.frame);
   const tpx = fr.h * v.tsize / 100, spx = tpx * v.ssize / 100;
-  const tfont = `${tpx}px ${v.font}, sans-serif`, sfont = `${spx}px ${v.sfont || 'alphalyrae'}, sans-serif`;
-  const tls = v.ls * tpx, sls = 0, tlh = tpx * v.gap, slh = spx * 1.3, sGap = titleLines.length && subLines.length ? tpx * 0.22 : 0;
+  const tfont = `${tpx}px ${v.font}, sans-serif`, sfont = `${spx}px ${v.sfont || 'ADAXI'}, sans-serif`;
+  const tls = v.ls * tpx, sls = (v.sfont === 'alphalyrae' ? 0 : v.ls * spx), tlh = tpx * v.gap, slh = spx * 1.3, sGap = titleLines.length && subLines.length ? tpx * 0.22 : 0;
 
   ctx.save();
   ctx.font = tfont; const tw = titleLines.map(l => measureLine(ctx, l, tls));
@@ -580,7 +580,7 @@ function clampDim(n) {
 }
 
 function glyphHint(v) {
-  const tSet = GLYPHS[v.font] || '', sSet = GLYPHS[v.sfont || 'alphalyrae'] || '', miss = new Set();
+  const tSet = GLYPHS[v.font] || '', sSet = GLYPHS[v.sfont || 'ADAXI'] || '', miss = new Set();
   if (v.font === 'ADAXI') {
     for (const ch of v.title) {
       if (/\s/.test(ch)) continue;
@@ -623,8 +623,8 @@ function restore() {
       if (s.vals.font === 'alphalyrae') {
         s.vals.font = 'ADAXI';
       }
-      if (!s.vals.sfont) {
-        s.vals.sfont = 'alphalyrae';
+      if (!s.vals.sfont || s.vals.sfont === 'alphalyrae') {
+        s.vals.sfont = 'ADAXI';
       }
     }
     setControls(s.vals || {});

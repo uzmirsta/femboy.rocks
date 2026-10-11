@@ -57,6 +57,10 @@ body {
     min-height: 100vh;
 }
 
+h1 {
+    font-family: ADAXI, sans-serif;
+}
+
 .skip-link {
     position: absolute;
     top: -100px;

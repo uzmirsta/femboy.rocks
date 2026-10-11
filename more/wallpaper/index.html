@@ -48,7 +48,6 @@
 
     <div class="app">
         <aside class="controls" id="controls" aria-label="Wallpaper settings">
-            <p class="sub">Fonts, colors, and sparkles pulled directly from femboy.rocks.</p>
 
             <section class="panel" aria-labelledby="canvas-heading">
                 <h2 id="canvas-heading">canvas</h2>
@@ -59,12 +58,14 @@
                 <div class="inline dims">
                     <div class="dim-input-group">
                         <label for="w" class="sr-only">Width in pixels</label>
-                        <input type="number" id="w" min="64" max="8192" step="1" aria-label="Width in pixels" placeholder="Width">
+                        <input type="number" id="w" min="64" max="8192" step="1" aria-label="Width in pixels"
+                            placeholder="Width">
                     </div>
                     <span class="x" aria-hidden="true">×</span>
                     <div class="dim-input-group">
                         <label for="h" class="sr-only">Height in pixels</label>
-                        <input type="number" id="h" min="64" max="8192" step="1" aria-label="Height in pixels" placeholder="Height">
+                        <input type="number" id="h" min="64" max="8192" step="1" aria-label="Height in pixels"
+                            placeholder="Height">
                     </div>
                 </div>
                 <div class="field">
@@ -90,7 +91,8 @@
                     <label for="seed">seed</label>
                     <div class="inline">
                         <input type="number" id="seed" min="0" max="999999" step="1" aria-label="Random seed number">
-                        <button class="btn small" id="roll" type="button" aria-label="Reroll random seed">reroll</button>
+                        <button class="btn small" id="roll" type="button"
+                            aria-label="Reroll random seed">reroll</button>
                     </div>
                 </div>
             </section>
@@ -115,8 +117,8 @@
                 <div class="field">
                     <label for="sfont">subtitle font (subtext)</label>
                     <select id="sfont">
-                        <option value="alphalyrae" selected>alpha lyrae (site font)</option>
-                        <option value="ADAXI">ADAXI</option>
+                        <option value="ADAXI" selected>ADAXI</option>
+                        <option value="alphalyrae">alpha lyrae (site font)</option>
                     </select>
                 </div>
                 <p class="hint" id="glyphHint" role="status" aria-live="polite" hidden></p>
@@ -183,7 +185,6 @@
                 </div>
                 <div class="meta">
                     <span id="dims" aria-live="polite"></span>
-                    <span>Preview is scaled down; downloads render at full resolution</span>
                 </div>
             </div>
         </main>
