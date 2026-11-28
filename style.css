@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: KiwiSoda;
+    src: url('assets/KiwiSoda.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background: #0D0C0E linear-gradient(180deg, #1a1016 0%, #4a2035 25%, #8f4468 45%, #ff93dd 70%, #ff93dd 100%);
     color: white;
